@@ -12,8 +12,11 @@ const server = http.createServer(app);
 const db = require("./models");
 const PORT = process.env.PORT;
 
+const morgan = require("morgan");
+
 app.use(cors());
 app.use(bodyparser.json());
+app.use(morgan());
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
