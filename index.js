@@ -16,10 +16,13 @@ const morgan = require("morgan");
 
 app.use(cors());
 app.use(bodyparser.json());
-app.use(morgan());
+app.use(morgan("dev"));
 
 const authRoutes = require("./routes/authRoutes");
+const expenseRoutes = require("./routes/expenseRoutes");
+
 app.use("/api/auth", authRoutes);
+app.use("/api/expenses", expenseRoutes);
 
 app.use(errorHandler);
 
