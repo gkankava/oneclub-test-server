@@ -4,12 +4,13 @@ exports.getExpenses = async function (req, res, next) {
   try {
     const userID = req.userId;
     const category_id = req.params.category_id;
-    const expensesList = await db.User.findOne(
-      { _id: userID, "expenses.category": category_id },
-      { "expenses.$": 1 }
-    ).populate("expenses.category");
 
-    return res.status(200).json(expensesList);
+    const user = await db.User.findById(userID).populate("expenses.category");
+    const expenses = user.expenses.filter((expense) => {
+      return expense.category._id.toString() === category_id;
+    });
+
+    return res.status(200).json(expenses);
   } catch (error) {
     return next(error);
   }
