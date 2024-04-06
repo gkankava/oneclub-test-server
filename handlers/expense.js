@@ -6,8 +6,9 @@ exports.getExpenses = async function (req, res, next) {
     const category_id = req.params.category_id;
 
     const user = await db.User.findById(userID).populate("expenses.category");
+
     const expenses = user.expenses.filter((expense) => {
-      return expense.category._id.toString() === category_id;
+      return expense.category?._id.toString() === category_id;
     });
 
     return res.status(200).json(expenses);
@@ -52,14 +53,12 @@ exports.updateExpense = async function (req, res, next) {
       return res.status(404).json({ message: "Expense not found" });
     }
 
-    // Update the expense at the found index
     user.expenses[expenseIndex].category = category_id;
     user.expenses[expenseIndex].company_name = company_name;
     user.expenses[expenseIndex].date = date;
     user.expenses[expenseIndex].price = price;
     user.expenses[expenseIndex].rating = rating;
 
-    // Save the user document
     await user.save();
 
     return res.status(200).json(user.expenses);
