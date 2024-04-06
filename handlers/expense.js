@@ -18,12 +18,13 @@ exports.addNewExpense = async function (req, res, next) {
   try {
     const userID = req.userId;
     const { category_id } = req.params;
-    const { company_name, date, price } = req.body;
+    const { company_name, date, price, rating } = req.body;
     const expense = {
       category: category_id,
       company_name,
       date,
       price,
+      rating,
     };
     const user = await db.User.findByIdAndUpdate(
       userID,
@@ -39,7 +40,7 @@ exports.updateExpense = async function (req, res, next) {
   try {
     const userID = req.userId;
     const { expense_id } = req.params;
-    const { category_id, company_name, date, price } = req.body;
+    const { category_id, company_name, date, price, rating } = req.body;
     const user = await db.User.findById(userID);
 
     const expenseIndex = user.expenses.findIndex(
@@ -55,6 +56,7 @@ exports.updateExpense = async function (req, res, next) {
     user.expenses[expenseIndex].company_name = company_name;
     user.expenses[expenseIndex].date = date;
     user.expenses[expenseIndex].price = price;
+    user.expenses[expenseIndex].rating = rating;
 
     // Save the user document
     await user.save();
