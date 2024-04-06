@@ -5,4 +5,3 @@ mongoose.connect(process.env.MONGO_URL);
 
 module.exports.User = require("./user");
 module.exports.Category = require("./category");
-module.exports.Expense = require("./expense");

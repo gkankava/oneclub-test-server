@@ -20,8 +20,10 @@ app.use(morgan("dev"));
 
 const authRoutes = require("./routes/authRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/expenses", expenseRoutes);
 
 app.use(errorHandler);

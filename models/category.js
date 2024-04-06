@@ -6,10 +6,6 @@ const categoriesSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  expense: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Expense",
-  },
 });
 
 const Category = mongoose.model("Category", categoriesSchema);
